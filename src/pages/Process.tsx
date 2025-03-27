@@ -19,22 +19,22 @@ const processSteps = [
     activities: [
       "Client interviews and questionnaire",
       "Site visits and measurements",
-      "AI-powered style preference analysis",
-      "Budget and timeline planning"
+      "AI-powered style preference analysis", // INTEGRATION POINT: AI style quiz results can be used here
+      "Budget and timeline planning" // INTEGRATION POINT: Connect with Budget Calculator
     ]
   },
   {
     id: 2,
     title: "Concept",
     description: "Our design team creates conceptual designs and visualizations that bring your vision to life through iterative refinement.",
-    icon: <PaintBrushIcon className="h-8 w-8 text-gold" />,
+    icon: <PaintbrushIcon className="h-8 w-8 text-gold" />, // Fixed icon name here
     timeline: "3-4 weeks",
-    aiTools: ["StyleGen AI", "Lighting Simulator"],
+    aiTools: ["StyleGen AI", "Lighting Simulator"], // INTEGRATION POINT: Connect with HomeDesigns.ai
     activities: [
-      "Mood board development",
+      "Mood board development", // INTEGRATION POINT: AI-generated mood boards
       "3D spatial planning",
-      "Material and finishes selection",
-      "Lighting and color scheme design"
+      "Material and finishes selection", // INTEGRATION POINT: AR material preview
+      "Lighting and color scheme design" // INTEGRATION POINT: AI-driven color recommendations
     ]
   },
   {
@@ -43,12 +43,12 @@ const processSteps = [
     description: "We transform concepts into detailed plans and oversee implementation to ensure your design is executed with precision.",
     icon: <CodeIcon className="h-8 w-8 text-gold" />,
     timeline: "8-12 weeks",
-    aiTools: ["Construction Planner", "MEP Optimizer"],
+    aiTools: ["Construction Planner", "MEP Optimizer"], // INTEGRATION POINT: Integrate with MEP planning tools
     activities: [
-      "Detailed technical drawings",
-      "Contractor and vendor coordination",
-      "Material procurement assistance",
-      "Quality control and site supervision"
+      "Detailed technical drawings", // INTEGRATION POINT: Connect with CAD software
+      "Contractor and vendor coordination", // INTEGRATION POINT: Zapier automation for vendor communications
+      "Material procurement assistance", // INTEGRATION POINT: Connect with shopping list export
+      "Quality control and site supervision" // INTEGRATION POINT: Project management integrations
     ]
   }
 ];
@@ -58,6 +58,7 @@ const Process = () => {
 
   return (
     <div className="min-h-screen bg-cream">
+      {/* INTEGRATION POINT: Add Tidio chatbot script in index.html */}
       <Navbar />
       
       {/* Hero Section */}
@@ -72,12 +73,14 @@ const Process = () => {
           <RevealAnimation delay={200}>
             <h1 className="text-5xl md:text-6xl font-bold mb-6 max-w-4xl">
               How We Transform Your Vision Into Reality
+              {/* INTEGRATION POINT: Use SurferSEO + ChatGPT to optimize this headline */}
             </h1>
           </RevealAnimation>
           
           <RevealAnimation delay={400}>
             <p className="text-xl max-w-3xl text-cream/80 mb-12">
               Our design process combines creative excellence with technological innovation to deliver exceptional results.
+              {/* INTEGRATION POINT: Use AI to generate SEO-optimized descriptions */}
             </p>
           </RevealAnimation>
         </div>
@@ -87,7 +90,10 @@ const Process = () => {
       <section className="py-16 bg-cream">
         <div className="content-container">
           <div className="relative">
+            {/* Timeline connector line */}
             <div className="hidden md:block absolute top-1/2 left-0 w-full h-1 bg-indigo/10 -translate-y-1/2 z-0"></div>
+            
+            {/* Step indicators */}
             <div className="flex flex-col md:flex-row justify-between items-center relative z-10">
               {processSteps.map((step) => (
                 <div 
@@ -111,6 +117,7 @@ const Process = () => {
       {/* Active Process Step Detail */}
       <section className="pb-24 bg-cream">
         <div className="content-container">
+          {/* INTEGRATION POINT: This section could be enhanced with dynamic data from Airtable */}
           {processSteps.map((step) => (
             <div 
               key={step.id}
@@ -132,6 +139,7 @@ const Process = () => {
                     
                     <div className="mb-8">
                       <h4 className="text-lg font-medium mb-3 text-indigo">AI Tools We Use</h4>
+                      {/* INTEGRATION POINT: Link these badges to detailed tool descriptions */}
                       <div className="flex flex-wrap gap-2">
                         {step.aiTools.map((tool, index) => (
                           <Badge key={index} className="bg-gold/20 hover:bg-gold/30 text-gold border-none">
@@ -162,13 +170,14 @@ const Process = () => {
         </div>
       </section>
       
-      {/* Call to Action */}
+      {/* Call to Action - INTEGRATION POINT: Connect form submissions with CRM via Zapier */}
       <section className="py-16 bg-indigo/5">
         <div className="content-container text-center">
           <RevealAnimation>
             <h2 className="text-3xl md:text-4xl font-bold mb-6 text-indigo">Ready to Transform Your Space?</h2>
             <p className="text-lg text-indigo/70 max-w-2xl mx-auto mb-8">
               Begin your design journey with Vaarahi Design Studio. Let's create spaces that inspire and delight.
+              {/* INTEGRATION POINT: Use AI to generate personalized CTA copy */}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a href="/contact" className="btn-primary">Start Your Project</a>
@@ -177,6 +186,8 @@ const Process = () => {
           </RevealAnimation>
         </div>
       </section>
+      
+      {/* INTEGRATION POINT: Add Instagram feed component here using a social media widget */}
       
       <Footer />
     </div>
