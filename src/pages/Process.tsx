@@ -1,6 +1,6 @@
 
 import { useState } from 'react';
-import { LightbulbIcon, CodeIcon, PaintBrushIcon, Clock, ArrowRight } from 'lucide-react';
+import { LightbulbIcon, CodeIcon, PaintbrushIcon, Clock, ArrowRight } from 'lucide-react';
 import RevealAnimation from '../components/ui/RevealAnimation';
 import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
