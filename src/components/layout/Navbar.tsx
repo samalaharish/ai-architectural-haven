@@ -1,22 +1,23 @@
 
 import { useState, useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
-import { Menu, X } from 'lucide-react';
+import { NavLink, useLocation } from 'react-router-dom';
+import { Menu, X, Home, Calculator, Paintbrush, Code, User, MessageCircle, BookOpen, Sparkles } from 'lucide-react';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const location = useLocation();
 
   const navItems = [
-    { name: 'Home', path: '/' },
-    { name: 'Services', path: '/services' },
-    { name: 'Portfolio', path: '/portfolio' },
-    { name: 'Process', path: '/process' },
-    { name: 'About', path: '/about' },
-    { name: 'Blog', path: '/blog' },
-    { name: 'Contact', path: '/contact' },
-    { name: 'AI Studio', path: '/ai-design-studio' },
-    { name: 'Budget Calculator', path: '/budget-calculator' },
+    { name: 'Home', path: '/', icon: <Home size={18} /> },
+    { name: 'Services', path: '/services', icon: <Sparkles size={18} /> },
+    { name: 'Portfolio', path: '/portfolio', icon: <Paintbrush size={18} /> },
+    { name: 'Process', path: '/process', icon: <Code size={18} /> },
+    { name: 'About', path: '/about', icon: <User size={18} /> },
+    { name: 'Blog', path: '/blog', icon: <BookOpen size={18} /> },
+    { name: 'Contact', path: '/contact', icon: <MessageCircle size={18} /> },
+    { name: 'AI Studio', path: '/ai-design-studio', icon: <Sparkles size={18} /> },
+    { name: 'Budget Calculator', path: '/budget-calculator', icon: <Calculator size={18} /> },
   ];
 
   // Track scroll position to change navbar style
@@ -32,6 +33,11 @@ const Navbar = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // Close mobile menu when route changes
+  useEffect(() => {
+    setIsOpen(false);
+  }, [location.pathname]);
 
   return (
     <nav 
@@ -50,29 +56,24 @@ const Navbar = () => {
           </span>
         </NavLink>
 
-        {/* Desktop Navigation */}
-        <div className="hidden lg:flex items-center space-x-8">
+        {/* Desktop Navigation - Updated to be more visible */}
+        <div className="hidden lg:flex items-center space-x-1">
           {navItems.map((item) => (
             <NavLink
               key={item.name}
               to={item.path}
               className={({ isActive }) => 
-                `font-medium text-sm transition-colors duration-300 relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-gold after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left ${
+                `flex items-center gap-1 font-medium text-sm transition-colors duration-300 rounded-md px-3 py-2 ${
                   isActive 
-                    ? 'text-indigo after:scale-x-100' 
-                    : 'text-indigo/70 hover:text-indigo'
+                    ? 'text-gold bg-indigo/10' 
+                    : 'text-indigo/70 hover:text-indigo hover:bg-indigo/5'
                 }`
               }
             >
-              {item.name}
+              {item.icon}
+              <span>{item.name}</span>
             </NavLink>
           ))}
-          <NavLink 
-            to="/ai-design-studio" 
-            className="btn-primary text-sm"
-          >
-            AI Design Studio
-          </NavLink>
         </div>
 
         {/* Mobile Navigation Toggle */}
@@ -91,30 +92,24 @@ const Navbar = () => {
           isOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
-        <div className="flex flex-col items-center space-y-6 p-6">
+        <div className="flex flex-col items-center space-y-4 p-6">
           {navItems.map((item) => (
             <NavLink
               key={item.name}
               to={item.path}
               onClick={() => setIsOpen(false)}
               className={({ isActive }) => 
-                `font-medium text-lg ${
+                `flex items-center gap-2 w-full font-medium text-lg rounded-md px-4 py-3 ${
                   isActive 
-                    ? 'text-gold' 
-                    : 'text-indigo'
+                    ? 'text-gold bg-indigo/10' 
+                    : 'text-indigo hover:bg-indigo/5'
                 }`
               }
             >
-              {item.name}
+              {item.icon}
+              <span>{item.name}</span>
             </NavLink>
           ))}
-          <NavLink 
-            to="/ai-design-studio" 
-            onClick={() => setIsOpen(false)}
-            className="btn-primary mt-4"
-          >
-            AI Design Studio
-          </NavLink>
         </div>
       </div>
     </nav>
