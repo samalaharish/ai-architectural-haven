@@ -2,8 +2,20 @@
 import RevealAnimation from '../components/ui/RevealAnimation';
 import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
+import { useEffect } from 'react';
 
 const Contact = () => {
+  // Set meta tags for SEO
+  useEffect(() => {
+    document.title = "Contact Vaarahi Design Studio – Let's Design Your Space";
+    
+    // Set meta description
+    const metaDescription = document.querySelector('meta[name="description"]');
+    if (metaDescription) {
+      metaDescription.setAttribute("content", "Reach out to Vaarahi Design Studio to start your interior design journey. Call, chat, or email us for consultations, site visits, and custom packages.");
+    }
+  }, []);
+  
   return (
     <div className="min-h-screen bg-cream">
       <Navbar />

@@ -2,8 +2,20 @@
 import RevealAnimation from '../components/ui/RevealAnimation';
 import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
+import { useEffect } from 'react';
 
 const Blog = () => {
+  // Set meta tags for SEO
+  useEffect(() => {
+    document.title = "Interior Design Insights & Articles | Vaarahi Design Studio Blog";
+    
+    // Set meta description
+    const metaDescription = document.querySelector('meta[name="description"]');
+    if (metaDescription) {
+      metaDescription.setAttribute("content", "Explore our collection of articles, case studies, and design insights about interior design, renovation trends, and home styling tips.");
+    }
+  }, []);
+  
   return (
     <div className="min-h-screen bg-cream">
       <Navbar />

@@ -2,8 +2,20 @@
 import RevealAnimation from '../components/ui/RevealAnimation';
 import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
+import { useEffect } from 'react';
 
 const About = () => {
+  // Set meta tags for SEO
+  useEffect(() => {
+    document.title = "About Vaarahi Design Studio – Interior Design with Purpose";
+    
+    // Set meta description
+    const metaDescription = document.querySelector('meta[name="description"]');
+    if (metaDescription) {
+      metaDescription.setAttribute("content", "Learn about Vaarahi Design Studio – a next-gen interior firm committed to thoughtful, elegant, and practical design solutions for Indian homes and offices.");
+    }
+  }, []);
+  
   return (
     <div className="min-h-screen bg-cream">
       <Navbar />

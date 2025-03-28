@@ -2,8 +2,20 @@
 import RevealAnimation from '../components/ui/RevealAnimation';
 import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
+import { useEffect } from 'react';
 
 const AIDesignStudio = () => {
+  // Set meta tags for SEO
+  useEffect(() => {
+    document.title = "AI Interior Design Tool – Smart Design Suggestions | Vaarahi";
+    
+    // Set meta description
+    const metaDescription = document.querySelector('meta[name="description"]');
+    if (metaDescription) {
+      metaDescription.setAttribute("content", "Use Vaarahi's AI-powered design studio to upload your room photo and get personalized design suggestions, moodboards, and product recommendations in minutes.");
+    }
+  }, []);
+  
   return (
     <div className="min-h-screen bg-cream">
       <Navbar />

@@ -76,23 +76,23 @@ const testimonials = [
 const trendingSolutions = [
   {
     id: 1,
-    title: 'Smart MEP Systems',
-    description: 'Integrated mechanical, electrical, and plumbing systems with AI-driven efficiency optimization.',
-    icon: '🏗️',
+    title: 'Modular Kitchen Design',
+    description: 'Custom-designed modular kitchens with smart storage solutions and premium finishes.',
+    icon: '🏠',
     color: 'bg-indigo text-cream'
   },
   {
     id: 2,
-    title: 'Sustainable Design',
-    description: 'Eco-friendly materials and energy-efficient solutions for environmentally conscious spaces.',
-    icon: '🌱',
+    title: 'Full Home Interiors',
+    description: 'Complete home transformation with coordinated design themes and functional layouts.',
+    icon: '🛋️',
     color: 'bg-sage text-cream'
   },
   {
     id: 3,
-    title: 'VR Walkthroughs',
-    description: 'Experience your space before construction with immersive virtual reality technology.',
-    icon: '👓',
+    title: 'Commercial Spaces',
+    description: 'Ergonomic office and retail space designs that enhance productivity and brand experience.',
+    icon: '🏢',
     color: 'bg-terracotta text-cream'
   }
 ];
@@ -107,6 +107,17 @@ const Index = () => {
     }, 8000);
     
     return () => clearInterval(interval);
+  }, []);
+  
+  // Set meta tags for SEO
+  useEffect(() => {
+    document.title = "Interior Design Studio for Modern Homes & Offices | Vaarahi Design Studio";
+    
+    // Set meta description
+    const metaDescription = document.querySelector('meta[name="description"]');
+    if (metaDescription) {
+      metaDescription.setAttribute("content", "Discover Vaarahi Design Studio – your partner for modular interiors, full home makeovers, and commercial space transformation. Get AI-powered design consultation and real-time budget estimates.");
+    }
   }, []);
   
   return (
@@ -137,28 +148,28 @@ const Index = () => {
           <div className="content-container py-32">
             <RevealAnimation>
               <span className="inline-block mb-4 px-4 py-1 bg-gold/10 text-gold rounded-full text-sm font-medium">
-                AI-Powered Design Innovation
+                Premium Interior Design Solutions
               </span>
             </RevealAnimation>
             
             <RevealAnimation delay={200}>
               <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 text-indigo max-w-4xl">
-                Where AI Meets <span className="text-gold">Architectural Brilliance</span>
+                Smart, Beautiful Interiors <span className="text-gold">Designed Around You</span>
               </h1>
             </RevealAnimation>
             
             <RevealAnimation delay={400}>
               <p className="text-lg md:text-xl max-w-2xl mb-10 text-indigo/80">
-                Transform your space with our innovative design solutions that blend cutting-edge AI technology with timeless architectural principles.
+                Transform your space with our innovative design solutions that blend functionality with timeless aesthetics.
               </p>
             </RevealAnimation>
             
             <RevealAnimation delay={600} className="flex flex-wrap gap-4">
               <NavLink to="/ai-design-studio" className="btn-primary">
-                Start with AI Design Studio
+                Try AI Design Studio
               </NavLink>
               <NavLink to="/budget-calculator" className="btn-secondary">
-                Calculate Your Project Budget
+                Calculate Your Budget
               </NavLink>
             </RevealAnimation>
             
@@ -212,7 +223,7 @@ const Index = () => {
                   
                   <img 
                     src={style.image} 
-                    alt={style.name} 
+                    alt={`${style.name} interior design style by Vaarahi Design Studio`} 
                     className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                   />
                   
@@ -308,11 +319,11 @@ const Index = () => {
           <RevealAnimation>
             <div className="text-center mb-16">
               <span className="inline-block mb-4 px-4 py-1 bg-indigo/10 text-indigo rounded-full text-sm font-medium">
-                Trending Solutions
+                Our Services
               </span>
-              <h2 className="text-4xl font-bold mb-6">Innovative Approaches</h2>
+              <h2 className="text-4xl font-bold mb-6">Premium Design Solutions</h2>
               <p className="text-lg max-w-2xl mx-auto text-indigo/70">
-                Discover our cutting-edge solutions that are transforming the design industry.
+                Explore our specialized interior design services for homes and commercial spaces.
               </p>
             </div>
           </RevealAnimation>
@@ -348,7 +359,7 @@ const Index = () => {
                 
                 <RevealAnimation delay={200}>
                   <p className="text-cream/80 mb-8">
-                    Start your design journey today and discover how our AI-powered solutions can bring your vision to life.
+                    Start your design journey today and discover how our innovative solutions can bring your vision to life.
                   </p>
                 </RevealAnimation>
                 
@@ -381,7 +392,7 @@ const Index = () => {
               <div className="md:w-1/2 relative min-h-[300px] md:min-h-0">
                 <img 
                   src="https://images.unsplash.com/photo-1551038247-3d9af20df552?auto=format&fit=crop" 
-                  alt="Modern interior design" 
+                  alt="Modern interior design transformation by Vaarahi Design Studio" 
                   className="absolute inset-0 w-full h-full object-cover"
                 />
               </div>
