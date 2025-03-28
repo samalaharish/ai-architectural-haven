@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { 
   Calculator, 
@@ -15,7 +14,8 @@ import {
   Store,
   Download,
   Mail,
-  FileText
+  FileText,
+  Phone
 } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -42,6 +42,7 @@ import {
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"; 
 
 // AI Tools used in Budget Calculator
 const aiTools = [
@@ -117,14 +118,14 @@ const roomOptions = {
   'Retail': ['Showroom Floor', 'Storage Area', 'Billing Counter', 'Trial Room', 'Washroom']
 };
 
-// Style multipliers for different design styles
+// Style multipliers for different design styles (hidden from user as requested)
 const styleMultiplier = {
   'Basic': 1.0,
   'Stylish': 1.3,
   'Luxury': 1.6
 };
 
-// Available add-ons for projects
+// Available add-ons for projects (removed pricing display as requested)
 const availableAddons = [
   { id: 'false-ceiling', label: 'False Ceiling', cost: 60, type: 'perSqFt' },
   { id: 'modular-kitchen', label: 'Modular Kitchen', cost: 100000, type: 'fixed' },
@@ -140,13 +141,15 @@ const availableAddons = [
  */
 const formSchema = z.object({
   name: z.string().min(2, { message: "Name must be at least 2 characters." }),
-  contact: z.string().min(5, { message: "Please provide a valid contact (email or phone)." }),
+  email: z.string().email({ message: "Please provide a valid email address." }),
+  phone: z.string().min(10, { message: "Please provide a valid phone number." }),
   propertyType: z.enum(["Residential", "Commercial", "Retail"]),
   style: z.enum(["Basic", "Stylish", "Luxury"]),
   bufferPercent: z.coerce.number().min(0).max(100),
   rooms: z.record(z.string(), z.number().min(0)),
   roomAreas: z.record(z.string(), z.number().min(0)),
-  addons: z.array(z.string())
+  addons: z.array(z.string()),
+  otherAddon: z.string().optional()
 });
 
 // Type for our form values
@@ -180,13 +183,15 @@ const BudgetCalculator = () => {
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
-      contact: "",
+      email: "",
+      phone: "",
       propertyType: "Residential",
       style: "Basic",
-      bufferPercent: 10,
+      bufferPercent: 10, // Hidden from user as requested
       rooms: roomOptions.Residential.reduce((acc, room) => ({ ...acc, [room]: 0 }), {}),
       roomAreas: roomOptions.Residential.reduce((acc, room) => ({ ...acc, [room]: 0 }), {}),
-      addons: []
+      addons: [],
+      otherAddon: ""
     }
   });
   
@@ -267,6 +272,14 @@ const BudgetCalculator = () => {
       }
     });
     
+    // Add "Other" addon if specified (default fixed cost)
+    const otherAddon = values.otherAddon?.trim();
+    if (otherAddon) {
+      const defaultCost = 25000; // Default cost for other addon
+      addonCosts["Other: " + otherAddon] = defaultCost;
+      totalAddons += defaultCost;
+    }
+    
     // Apply style multiplier
     const styleMultiplierValue = styleMultiplier[style as keyof typeof styleMultiplier];
     const subtotal = (roomTotal + totalAddons) * styleMultiplierValue;
@@ -309,18 +322,10 @@ const BudgetCalculator = () => {
      *   });
      */
     
-    if (values.contact.includes('@')) {
-      // If contact is an email
-      toast({
-        title: "Estimate Saved",
-        description: "We'll send your detailed estimate to your email shortly.",
-      });
-    } else {
-      toast({
-        title: "Estimate Ready",
-        description: "Your detailed estimate has been generated.",
-      });
-    }
+    toast({
+      title: "Estimate Ready",
+      description: "We'll send your detailed estimate to your email shortly.",
+    });
   };
   
   /**
@@ -393,7 +398,7 @@ const BudgetCalculator = () => {
                     <Form {...form}>
                       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                         {/* Personal Information */}
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="space-y-4">
                           <FormField
                             control={form.control}
                             name="name"
@@ -410,12 +415,34 @@ const BudgetCalculator = () => {
                           
                           <FormField
                             control={form.control}
-                            name="contact"
+                            name="email"
                             render={({ field }) => (
                               <FormItem>
-                                <FormLabel>Email or Phone</FormLabel>
+                                <FormLabel>Email Address</FormLabel>
                                 <FormControl>
-                                  <Input placeholder="For your detailed estimate" {...field} />
+                                  <Input 
+                                    type="email" 
+                                    placeholder="For your detailed estimate" 
+                                    {...field} 
+                                  />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                          
+                          <FormField
+                            control={form.control}
+                            name="phone"
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormLabel>Phone Number</FormLabel>
+                                <FormControl>
+                                  <Input 
+                                    type="tel" 
+                                    placeholder="Your contact number" 
+                                    {...field} 
+                                  />
                                 </FormControl>
                                 <FormMessage />
                               </FormItem>
@@ -496,7 +523,34 @@ const BudgetCalculator = () => {
                           </div>
                         </div>
                         
-                        {/* Add-ons */}
+                        {/* Design Style */}
+                        <FormField
+                          control={form.control}
+                          name="style"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Design Style</FormLabel>
+                              <Select
+                                onValueChange={field.onChange}
+                                defaultValue={field.value}
+                              >
+                                <FormControl>
+                                  <SelectTrigger>
+                                    <SelectValue placeholder="Select style" />
+                                  </SelectTrigger>
+                                </FormControl>
+                                <SelectContent>
+                                  <SelectItem value="Basic">Basic</SelectItem>
+                                  <SelectItem value="Stylish">Stylish</SelectItem>
+                                  <SelectItem value="Luxury">Luxury</SelectItem>
+                                </SelectContent>
+                              </Select>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                        
+                        {/* Add-ons as checkboxes */}
                         <div>
                           <h3 className="text-lg font-medium text-indigo mb-4">Add-ons</h3>
                           <FormField
@@ -532,14 +586,6 @@ const BudgetCalculator = () => {
                                             </FormControl>
                                             <FormLabel className="text-sm font-normal">
                                               {addon.label}
-                                              <span className="text-xs text-indigo/60 block">
-                                                {addon.type === 'perSqFt' 
-                                                  ? `₹${addon.cost}/sq.ft`
-                                                  : addon.type === 'perUnit'
-                                                    ? `₹${addon.cost.toLocaleString()}/unit`
-                                                    : `₹${addon.cost.toLocaleString()}`
-                                                }
-                                              </span>
                                             </FormLabel>
                                           </FormItem>
                                         )
@@ -550,60 +596,46 @@ const BudgetCalculator = () => {
                               </FormItem>
                             )}
                           />
+                          
+                          {/* Other Add-on Option */}
+                          <FormField
+                            control={form.control}
+                            name="otherAddon"
+                            render={({ field }) => (
+                              <FormItem className="mt-4">
+                                <FormLabel>Other Add-on (Please specify)</FormLabel>
+                                <FormControl>
+                                  <Input 
+                                    placeholder="Enter any other requirements" 
+                                    {...field} 
+                                  />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
                         </div>
                         
-                        {/* Design Style */}
-                        <FormField
-                          control={form.control}
-                          name="style"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel>Design Style</FormLabel>
-                              <Select
-                                onValueChange={field.onChange}
-                                defaultValue={field.value}
-                              >
+                        {/* Hidden Buffer */}
+                        <div className="hidden">
+                          <FormField
+                            control={form.control}
+                            name="bufferPercent"
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormLabel>Contingency Buffer</FormLabel>
                                 <FormControl>
-                                  <SelectTrigger>
-                                    <SelectValue placeholder="Select style" />
-                                  </SelectTrigger>
+                                  <Input 
+                                    type="number" 
+                                    min="0"
+                                    max="25"
+                                    {...field}
+                                  />
                                 </FormControl>
-                                <SelectContent>
-                                  <SelectItem value="Basic">Basic (1.0x)</SelectItem>
-                                  <SelectItem value="Stylish">Stylish (1.3x)</SelectItem>
-                                  <SelectItem value="Luxury">Luxury (1.6x)</SelectItem>
-                                </SelectContent>
-                              </Select>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                        
-                        {/* Buffer Percentage */}
-                        <FormField
-                          control={form.control}
-                          name="bufferPercent"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel className="flex justify-between">
-                                <span>Contingency Buffer</span>
-                                <span className="text-indigo/70">{field.value}%</span>
-                              </FormLabel>
-                              <FormControl>
-                                <Slider
-                                  min={0}
-                                  max={25}
-                                  step={5}
-                                  value={[field.value]}
-                                  onValueChange={(value) => field.onChange(value[0])}
-                                />
-                              </FormControl>
-                              <FormDescription>
-                                A buffer helps account for unexpected expenses during project execution.
-                              </FormDescription>
-                            </FormItem>
-                          )}
-                        />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
                         
                         <Button 
                           type="submit" 
@@ -645,11 +677,6 @@ const BudgetCalculator = () => {
                               <span className="font-medium text-indigo">₹{Math.round(cost).toLocaleString()}</span>
                             </div>
                           ))}
-                          
-                          <div className="border-t pt-2 mt-2 flex justify-between items-center">
-                            <span className="font-medium text-indigo">Base Room Total</span>
-                            <span className="font-medium text-indigo">₹{Math.round(breakdown.baseTotal).toLocaleString()}</span>
-                          </div>
                         </div>
                         
                         {/* Add-on costs if any */}
@@ -663,11 +690,6 @@ const BudgetCalculator = () => {
                                 <span className="font-medium text-indigo">₹{Math.round(cost).toLocaleString()}</span>
                               </div>
                             ))}
-                            
-                            <div className="border-t pt-2 mt-2 flex justify-between items-center">
-                              <span className="font-medium text-indigo">Add-on Total</span>
-                              <span className="font-medium text-indigo">₹{Math.round(breakdown.addonTotal).toLocaleString()}</span>
-                            </div>
                           </div>
                         )}
                         
@@ -691,10 +713,6 @@ const BudgetCalculator = () => {
                             <span className="text-indigo/70">Permits & Fees</span>
                             <span className="font-medium text-indigo">₹{breakdown.permits.toLocaleString()}</span>
                           </div>
-                          <div className="flex justify-between items-center">
-                            <span className="text-indigo/70">Contingency Buffer</span>
-                            <span className="font-medium text-indigo">₹{Math.round(breakdown.bufferAmount).toLocaleString()}</span>
-                          </div>
                         </div>
                       </div>
                       
@@ -715,7 +733,6 @@ const BudgetCalculator = () => {
                         
                         <p className="text-xs text-indigo/60 text-center">
                           The detailed PDF includes complete specifications and a project timeline.
-                          {/* INTEGRATION POINT: Mention email delivery time and any other relevant information */}
                         </p>
                       </div>
                       
@@ -777,7 +794,6 @@ const BudgetCalculator = () => {
                       ))}
                     </div>
                     
-                    {/* INTEGRATION POINT: Add a case studies section or testimonials */}
                     <div className="mt-8 p-5 bg-indigo/5 rounded-lg border border-indigo/10">
                       <h3 className="text-lg font-medium text-indigo mb-2 flex items-center">
                         <FileText className="h-5 w-5 mr-2 text-gold" />
