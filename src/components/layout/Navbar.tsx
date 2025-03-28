@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
-import { Menu, X, Home, Calculator, Paintbrush, Code, User, MessageCircle, BookOpen, Sparkles } from 'lucide-react';
+import { Menu, X, Home, Calculator, Paintbrush, User, MessageCircle, BookOpen, Sparkles } from 'lucide-react';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -12,12 +12,10 @@ const Navbar = () => {
     { name: 'Home', path: '/', icon: <Home size={18} /> },
     { name: 'Services', path: '/services', icon: <Sparkles size={18} /> },
     { name: 'Portfolio', path: '/portfolio', icon: <Paintbrush size={18} /> },
-    { name: 'Process', path: '/process', icon: <Code size={18} /> },
     { name: 'About', path: '/about', icon: <User size={18} /> },
     { name: 'Blog', path: '/blog', icon: <BookOpen size={18} /> },
-    { name: 'Contact', path: '/contact', icon: <MessageCircle size={18} /> },
-    { name: 'AI Studio', path: '/ai-design-studio', icon: <Sparkles size={18} /> },
     { name: 'Budget Calculator', path: '/budget-calculator', icon: <Calculator size={18} /> },
+    { name: 'Contact', path: '/contact', icon: <MessageCircle size={18} /> },
   ];
 
   // Track scroll position to change navbar style
@@ -43,8 +41,8 @@ const Navbar = () => {
     <nav 
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled 
-          ? 'py-3 bg-cream/90 backdrop-blur-md shadow-sm' 
-          : 'py-6 bg-transparent'
+          ? 'py-3 bg-cream/95 backdrop-blur-md shadow-sm' 
+          : 'py-6 bg-cream/80 backdrop-blur-sm'
       }`}
     >
       <div className="content-container flex items-center justify-between">

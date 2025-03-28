@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { ArrowRight, Star, Check } from 'lucide-react';
@@ -169,8 +170,8 @@ const Index = () => {
             </RevealAnimation>
             
             <RevealAnimation delay={600} className="flex flex-wrap gap-4">
-              <NavLink to="/ai-design-studio" className="btn-primary">
-                Try AI Design Studio
+              <NavLink to="/portfolio" className="btn-primary">
+                Explore Design Ideas
               </NavLink>
               <NavLink to="/budget-calculator" className="btn-secondary">
                 Calculate Your Budget
@@ -196,7 +197,7 @@ const Index = () => {
                       <Star key={star} size={16} className="fill-gold text-gold" />
                     ))}
                   </div>
-                  <p className="text-sm mt-1">From over 200+ happy clients</p>
+                  <p className="text-sm mt-1">Join our early customers transforming their spaces with confidence.</p>
                 </div>
               </div>
             </RevealAnimation>
@@ -216,7 +217,7 @@ const Index = () => {
       {/* Process Overview */}
       <ProcessOverview />
       
-      {/* Testimonials */}
+      {/* Testimonials Section with proper spacing */}
       <section className="py-24 bg-indigo text-cream">
         <div className="content-container">
           <RevealAnimation>
@@ -240,7 +241,7 @@ const Index = () => {
                     activeTestimonial === index ? 'opacity-100 z-10' : 'opacity-0 z-0'
                   }`}
                 >
-                  <div className="bg-indigo/50 backdrop-blur-sm p-8 md:p-10 rounded-2xl border border-cream/10">
+                  <div className="bg-indigo/50 backdrop-blur-sm p-8 md:p-10 rounded-2xl border border-cream/10 shadow-lg">
                     <div className="flex flex-col md:flex-row gap-8 items-center">
                       <div className="w-24 h-24 md:w-32 md:h-32 rounded-full overflow-hidden flex-shrink-0 border-4 border-gold/30">
                         <img 
@@ -287,6 +288,9 @@ const Index = () => {
           </div>
         </div>
       </section>
+      
+      {/* Add spacing before Budget Match section */}
+      <div className="h-16 bg-cream"></div>
       
       {/* Budget Match Prompt */}
       <section className="py-24 bg-cream">

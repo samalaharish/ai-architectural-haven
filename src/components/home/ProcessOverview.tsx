@@ -1,4 +1,5 @@
 
+import { Sparkles, MessageCircle, Paintbrush } from 'lucide-react';
 import RevealAnimation from '../ui/RevealAnimation';
 import ProcessStep from './ProcessStep';
 
@@ -7,17 +8,20 @@ const ProcessOverview = () => {
     {
       number: 1,
       title: 'Consultation',
-      description: 'We start with understanding your needs, preferences, and budget constraints through an in-depth consultation.'
+      description: 'We start with understanding your needs, preferences, and budget constraints through an in-depth consultation.',
+      icon: <MessageCircle size={24} />
     },
     {
       number: 2,
       title: 'Design',
-      description: 'Our team creates detailed design concepts, 3D visualizations, and material selection tailored to your space.'
+      description: 'Our team creates detailed design concepts, 3D visualizations, and material selection tailored to your space.',
+      icon: <Paintbrush size={24} />
     },
     {
       number: 3,
       title: 'Execution',
-      description: 'We handle the end-to-end implementation with quality craftsmanship and regular progress updates.'
+      description: 'We handle the end-to-end implementation with quality craftsmanship and regular progress updates.',
+      icon: <Sparkles size={24} />
     }
   ];
   
@@ -44,6 +48,7 @@ const ProcessOverview = () => {
               title={step.title}
               description={step.description}
               delay={index * 200}
+              icon={step.icon}
             />
           ))}
         </div>
