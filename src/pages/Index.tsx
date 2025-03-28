@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { ArrowRight, Star, Check } from 'lucide-react';
@@ -6,6 +5,11 @@ import RevealAnimation from '../components/ui/RevealAnimation';
 import AnimatedGradient from '../components/ui/AnimatedGradient';
 import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
+import CompanyIntro from '../components/home/CompanyIntro';
+import ServiceOverview from '../components/home/ServiceOverview';
+import ProcessOverview from '../components/home/ProcessOverview';
+import ProjectHighlights from '../components/home/ProjectHighlights';
+import BudgetMatchPrompt from '../components/home/BudgetMatchPrompt';
 
 const designStyles = [
   {
@@ -200,46 +204,17 @@ const Index = () => {
         </AnimatedGradient>
       </section>
       
-      {/* Design Styles Grid */}
-      <section className="py-24 bg-cream">
-        <div className="content-container">
-          <RevealAnimation>
-            <div className="text-center mb-16">
-              <span className="inline-block mb-4 px-4 py-1 bg-indigo/10 text-indigo rounded-full text-sm font-medium">
-                Explore Design Styles
-              </span>
-              <h2 className="text-4xl font-bold mb-6">Find Your Perfect Aesthetic</h2>
-              <p className="text-lg max-w-2xl mx-auto text-indigo/70">
-                Discover the design style that resonates with your vision and lifestyle, crafted with precision and personalized for your space.
-              </p>
-            </div>
-          </RevealAnimation>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {designStyles.map((style, index) => (
-              <RevealAnimation key={style.id} delay={index * 100}>
-                <div className="group relative overflow-hidden rounded-lg shadow-md h-80 transition-all duration-500 hover:shadow-xl">
-                  <div className="absolute inset-0 bg-gradient-to-t from-indigo/90 to-transparent opacity-70 transition-opacity group-hover:opacity-80 z-10" />
-                  
-                  <img 
-                    src={style.image} 
-                    alt={`${style.name} interior design style by Vaarahi Design Studio`} 
-                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                  />
-                  
-                  <div className="absolute bottom-0 left-0 right-0 p-6 z-20 transition-transform duration-500 group-hover:translate-y-[-10px]">
-                    <h3 className="text-2xl font-bold text-cream mb-2">{style.name}</h3>
-                    <p className="text-cream/80 mb-4">{style.description}</p>
-                    <span className="text-gold flex items-center text-sm font-medium">
-                      Explore Style <ArrowRight size={16} className="ml-2 animate-slide-right" />
-                    </span>
-                  </div>
-                </div>
-              </RevealAnimation>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* Company Introduction */}
+      <CompanyIntro />
+      
+      {/* Service Overview */}
+      <ServiceOverview />
+      
+      {/* Project Highlights */}
+      <ProjectHighlights />
+      
+      {/* Process Overview */}
+      <ProcessOverview />
       
       {/* Testimonials */}
       <section className="py-24 bg-indigo text-cream">
@@ -313,35 +288,10 @@ const Index = () => {
         </div>
       </section>
       
-      {/* Trending Solutions */}
+      {/* Budget Match Prompt */}
       <section className="py-24 bg-cream">
         <div className="content-container">
-          <RevealAnimation>
-            <div className="text-center mb-16">
-              <span className="inline-block mb-4 px-4 py-1 bg-indigo/10 text-indigo rounded-full text-sm font-medium">
-                Our Services
-              </span>
-              <h2 className="text-4xl font-bold mb-6">Premium Design Solutions</h2>
-              <p className="text-lg max-w-2xl mx-auto text-indigo/70">
-                Explore our specialized interior design services for homes and commercial spaces.
-              </p>
-            </div>
-          </RevealAnimation>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {trendingSolutions.map((solution, index) => (
-              <RevealAnimation key={solution.id} delay={index * 200}>
-                <div className={`rounded-xl p-8 h-full flex flex-col ${solution.color}`}>
-                  <div className="text-4xl mb-6">{solution.icon}</div>
-                  <h3 className="text-2xl font-bold mb-4">{solution.title}</h3>
-                  <p className="mb-6 text-cream/80 flex-grow">{solution.description}</p>
-                  <NavLink to="/services" className="inline-flex items-center text-gold hover:underline mt-auto font-medium">
-                    Learn more <ArrowRight size={16} className="ml-2" />
-                  </NavLink>
-                </div>
-              </RevealAnimation>
-            ))}
-          </div>
+          <BudgetMatchPrompt />
         </div>
       </section>
       
